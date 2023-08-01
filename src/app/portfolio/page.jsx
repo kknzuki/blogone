@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
+
 const Portfolio = () => {
   return (
     <section className='my-8'>
@@ -8,6 +9,7 @@ const Portfolio = () => {
         <h2 className='p-4 text-xl md:text-4xl'>Our Gallery</h2>
       </div>
       <div className='grid grid-cols-3 gap-3 p-5 '>
+      
         <Link
           href='portfolio/illustrations'
           className='border-2 border-gray-400 p-4 h-[500px] w-[300px]'

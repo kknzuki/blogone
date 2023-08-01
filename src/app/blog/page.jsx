@@ -4,44 +4,42 @@ import darkmoon from 'public/darkmoon.jpg';
 import r43ockjN from 'public/r43ockjN.jpeg';
 import Link from 'next/link';
 
-const Blog = () => {
+async function getData() {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+    cache: 'no-store',
+  });
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
+const Blog = async () => {
+  const data = await getData();
   return (
-    <div >
-      <Link href='/blog/test1'className='grid grid-cols-2 gap-2  p-5'>
-        <div>
-          <Image src={darkmoon} alt='' width={400} height={250} />
-        </div>
-        <div>
-          <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mb-4 p-4'>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam rem
-            impedit soluta!
-          </h1>
-          <p className='mb-4 p-4'>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
-            exercitationem voluptatibus nemo esse sint debitis ut porro iste
-            excepturi dolor ex, quos officiis, eveniet rem quasi molestias?
-            Ipsam magni quidem molestias natus tempore obcaecati.
-          </p>
-        </div>
-      </Link>
-      {/* second blog */}
-      <Link href='/blog/test2'className='grid grid-cols-2 gap-2  p-5'>
-        <div>
-          <Image src={r43ockjN} alt='' width={400} height={250} />
-        </div>
-        <div>
-          <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mb-4 p-4'>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam rem
-            impedit soluta!
-          </h1>
-          <p className='mb-4 p-4'>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit
-            exercitationem voluptatibus nemo esse sint debitis ut porro iste
-            excepturi dolor ex, quos officiis, eveniet rem quasi molestias?
-            Ipsam magni quidem molestias natus tempore obcaecati.
-          </p>
-        </div>
-      </Link>
+    <div>
+      {data.map((item) => (
+        <Link
+          href='blog/test1'
+          className='grid grid-cols-2 gap-2  p-5'
+          key={item.id}
+        >
+          <div>
+            <Image src={darkmoon} alt='' width={400} height={250} />
+          </div>
+          <div>
+            <h1 className='text-xl md:text-2xl lg:text-3xl font-bold mb-4 p-4'>
+              {item.title}
+            </h1>
+            <small>{item.userId}</small>
+            <p className='mb-4 p-4'>{item.body}</p>
+          </div>
+        </Link>
+      ))}
     </div>
   );
 };
