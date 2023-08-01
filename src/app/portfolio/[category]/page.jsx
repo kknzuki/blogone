@@ -1,48 +1,44 @@
 import React from 'react';
 import Image from 'next/image';
+import { items } from './data.js'
+import { notFound } from "next/navigation";
+
+const getData=(cat)=>{
+  const data = items[cat]
+  if (data) {
+    return data
+  }
+  return notFound()
+
+}
+
 
 const Category = ({ params }) => {
+  const data = getData(params.category);
   return (
-    <div>
-      <h1 className='p-5 capitalize text-xl md:text-3xl text-green-600'>
-        {params.category}
-      </h1>
-      {/* container for notes */}
-      <div className='grid grid-cols-2'>
-        {/* /first note */}
-        <div className='p-5 text-center'>
-          <h2 className='text-xl md:text-2xl lg:text-3xl mb-4'>Test</h2>
-          <p className='mb-8'>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
-            accusamus porro nihil. Qui.
-          </p>
-          <button
-            className='bg-green-600 text-white p-2 rounded hover:bg-yellow-400'
-            url='#'
-          >
-            See more
-          </button>
-          <div>
+    <div className=''>
+      <h1 className='text-xl md:text-2xl lg:text-6xl font-bold text-green-600 mb-6 text-center capitalize p-5 '>{params.category}</h1>
+
+      {data.map((item) => (
+        <div className='p-5 grid md:grid-cols-2 lg:grid-cols-2 xs:grid-cols-2 justify-between gap-2' key={item.id}>
+          <div className=''>
+            <h1 className='text-xl md:text-3xl lg:text-5xl font-bold text-gray-600 mb-4'>{item.title}</h1>
+            <p className=''>{item.desc}</p>
+            <button className="bg-green-600 p-2 text-white mt-4 rounded hover:bg-yellow-400 visited:bg-red-400 mb-4">see more</button>
+          
+          </div>
+          <div className=''>
             <Image
-              src='/public/darkmoon.jpg'
-              alt='background image'
-              width={300}
-              height={300}
+              className=''
+            
+              src={item.image}
+              alt=""
+              height={500}
+              width={400}
             />
           </div>
         </div>
-        {/* second note */}
-        <div className='p-5 text-center'>
-          <h2 className='text-xl md:text-2xl lg:text-3xl mb-4'>Test 2</h2>
-          <p className='mb-8'>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Architecto
-            accusamus porro nihil. Qui.lorem12
-          </p>
-          <button className="bg-green-600 text-white p-2 rounded hover:bg-yellow-400 url='#'">
-            See more
-          </button>
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
