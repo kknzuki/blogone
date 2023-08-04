@@ -2,6 +2,11 @@ import React from 'react';
 import Image from "next/image";
 import clipartmessage from "/public/clipartmessage.jpg"
 
+export const metadata = {
+  title: 'Kenki Blog contact blog',
+  description: 'contact page',
+}
+
 const Contact = () => {
   return (
     <div className='grid grid-cols-2 justify-between gap-2 p-5'>
